@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special for Adekku Tercintaa</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
+
+        /* Background Estetik */
+        .main-bg {
+            position: fixed; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            z-index: -1; animation: bgMotion 10s infinite alternate;
+        }
+        @keyframes bgMotion {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .container { height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .clip { display: none; flex-direction: column; align-items: center; max-width: 600px; }
+        .active { display: flex; animation: fadeIn 1s forwards; }
+
+        /* Typography */
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: white; text-shadow: 2px 2px 15px rgba(0,0,0,0.2); }
+        h2 { color: white; margin-bottom: 15px; font-weight: 600; }
+        
+        .box {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            padding: 25px; border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white; line-height: 1.6;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            margin-top: 30px; padding: 15px 45px;
+            border: none; background: white; color: #ff758c;
+            border-radius: 50px; font-weight: 700; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+
+        /* Animasi */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .heart { font-size: 80px; animation: heartbeat 1s infinite alternate; }
+        @keyframes heartbeat { to { transform: scale(1.2); } }
+
+        /* Floating Stars */
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: float 5s infinite linear; }
+        @keyframes float { from { transform: translateY(100vh); } to { transform: translateY(-10vh); } }
+    </style>
+</head>
+<body>
+
+    <div class="main-bg"></div>
+    <div id="star-container"></div>
+
+    <audio id="audioTrack" preload="auto" loop>
+        <source src="https://files.catbox.moe/2cmj7j.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <div id="clip1" class="clip active">
+            <div style="font-size: 50px; margin-bottom: 10px;">🌸</div>
+            <h1>Halo, Adekku Tercintaa..</h1>
+            <p style="color: white; opacity: 0.9;">Ada sesuatu yang mau abang kasih lihat.</p>
+            <button class="btn" onclick="startStory()">Klik untuk mulai ✨</button>
+        </div>
+
+        <div id="clip2" class="clip">
+            <h2>Ehm, Sebentar...</h2>
+            <div id="text2" class="box"></div>
+            <button id="btn2" class="btn" style="display:none;" onclick="next(3)">NihhBaca yaa:))</button>
+        </div>
+
+        <div id="clip3" class="clip">
+            <h2>Kenapa Kamu Berharga?</h2>
+            <div id="text3" class="box"></div>
+            <button id="btn3" class="btn" style="display:none;" onclick="next(4)">Terakhir..</button>
+        </div>
+
+        <div id="clip4" class="clip">
+            <div class="heart">💖</div>
+            <h1>Tetap jadi Nisa yang abang kenal yaa, jangan berubahh:)</h1>
+            <p style="color: white; line-height: 1.8;">Makasih ya dek sudah selalu ada. Kamu adalah adek online terbaik yang pernah abang temui, walaupun kenal nya tidak secara sengaja online,akan tetapi kehadiran adek waktu itu hingga sekarang abang merasa beruntung mengenali adekk. Abang sangat sayang ama adekk, jadi kalau adek ada apa apa kabarin abang yaa! ✨</p>
+            <button class="btn" onclick="location.reload()" style="background: #ff758c; color: white;">Putar Lagi</button>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById("audioTrack");
+
+        // Fungsi Memulai Segalanya
+        function startStory() {
+            // Paksa play audio
+            audio.play().catch(e => {
+                console.log("Audio play failed, retrying...");
+                // Fallback jika catbox error, pakai link lain sebagai cadangan
+                audio.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+                audio.play();
+            });
+            next(2);
+        }
+
+        function next(n) {
+            // Pastikan audio tetap jalan di tiap klik
+            audio.play();
+
+            document.querySelectorAll('.clip').forEach(c => c.classList.remove('active'));
+            document.getElementById('clip' + n).classList.add('active');
+
+            if (n === 2) {
+                typeWriter("text2", "Sebenernya ada yang mau abang sampaikan nih buat adekk...", "btn2");
+            } else if (n === 3) {
+                typeWriter("text3", "Adekkkk, makasih ya dek sudah sering support abang. Pas abang ada masalah kamu selalu kasih solusi, pas abang lagi emang down adek bisa mengembalikan semangat abang, pas abang lagi galau adekk bisa membuat hati abng tenang. Kamu bener-bener berharga banget buat abang.", "btn3");
+            }
+        }
+
+        function typeWriter(id, text, btnId) {
+            let i = 0;
+            const el = document.getElementById(id);
+            el.innerHTML = "";
+            function speed() {
+                if (i < text.length) {
+                    el.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(speed, 60);
+                } else {
+                    document.getElementById(btnId).style.display = "block";
+                }
+            }
+            speed();
+        }
+
+        // Hiasan Bintang Melayang
+        for (let i = 0; i < 20; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = star.style.height = Math.random() * 5 + 'px';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            document.getElementById('star-container').appendChild(star);
+        }
+    </script>
+</body>
+</html>
